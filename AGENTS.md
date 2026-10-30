@@ -68,3 +68,23 @@ domínio inteiro parar de resolver — site e e-mail, para todo mundo.
 `.gitignore`. Chave de API, token e senha não entram neste repositório.
 
 `.claude/settings.local.json` é pessoal de cada máquina e fica de fora.
+
+## ⚠ Este repositório é público, e por quê
+
+Ele nasceu privado e foi aberto em 29/10/2026. O motivo é concreto: **o plano
+Hobby da Vercel não faz deploy de repositório privado que pertence a uma
+organização.** A escolha era abrir o repositório ou subir o plano, e abrir saiu
+de graça porque o conteúdo daqui já é público — é cópia do que está servido em
+`www.marketingapex.com.br`. É a mesma escolha que o repositório `site` fez.
+
+O que decorre disso:
+
+```
+pode entrar     a página, o texto, o que já está no ar
+não pode        chave, token, senha, dado de cliente
+```
+
+O método da casa — nomenclatura, abertura de cliente, padrões de trabalho —
+mora no repositório `contexto`, que é privado. Regra escrita aqui fica legível
+por qualquer pessoa, e **fechar o repositório depois não apaga o que já foi
+lido ou clonado**.
