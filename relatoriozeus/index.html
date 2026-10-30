@@ -99,10 +99,21 @@ body{margin:0; background:var(--ink); color:var(--fg);
 .steps{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px;
   max-width:660px; margin:0 auto}
 .step{display:flex; flex-direction:column; align-items:center;
-  text-align:center; gap:3px}
+  text-align:center; gap:3px; position:relative; padding-bottom:12px}
+/* a letra acende, uma etapa depois da outra, como no site */
 .big-l{font-weight:900; font-stretch:125%; font-size:clamp(54px,15vw,112px);
-  line-height:.82; color:var(--gold); -webkit-text-stroke:1.5px var(--gold);
-  text-shadow:0 0 40px rgba(252,190,9,.35)}
+  line-height:.82; color:transparent;
+  -webkit-text-stroke:1.5px rgba(252,190,9,.55);
+  animation:acende .9s cubic-bezier(.2,.8,.2,1) both; animation-delay:var(--d,0s)}
+@keyframes acende{
+  from{color:transparent; -webkit-text-stroke-color:rgba(252,190,9,.4); text-shadow:none}
+  to{color:var(--gold); -webkit-text-stroke-color:var(--gold);
+     text-shadow:0 0 40px rgba(252,190,9,.35)}}
+.step::after{content:""; position:absolute; left:50%; bottom:0; height:2px; width:0;
+  transform:translateX(-50%); border-radius:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  animation:risca 1.1s cubic-bezier(.2,.8,.2,1) both; animation-delay:var(--d,0s)}
+@keyframes risca{from{width:0} to{width:78%}}
 .stk{font-family:var(--mono); font-size:clamp(8px,1.9vw,11px); color:var(--mute);
   letter-spacing:.12em; text-transform:uppercase}
 .st-name{font-weight:800; font-stretch:115%; text-transform:uppercase;
@@ -182,7 +193,11 @@ p{margin:0 0 15px}
   text-align:center; padding-bottom:2px}
 .cal .c{aspect-ratio:1; border-radius:8px; border:1px solid var(--line);
   background:rgba(255,255,255,.015); position:relative; display:grid; place-items:center}
-.cal .c i{width:42%; aspect-ratio:1; border-radius:50%}
+/* os pontos pipocam um a um quando o calendario entra na tela */
+.cal .c i{width:42%; aspect-ratio:1; border-radius:50%; transform:scale(0)}
+.cal.in .c i{animation:pipoca .5s cubic-bezier(.2,.8,.3,1.5) both;
+  animation-delay:var(--d,0s)}
+@keyframes pipoca{from{transform:scale(0)} to{transform:scale(1)}}
 .cal .c i.r{background:var(--gold); box-shadow:0 0 10px rgba(252,190,9,.6)}
 .cal .c i.k{background:var(--fg)}
 .cal .c i.s{border:1.5px solid var(--gold)}
@@ -249,12 +264,18 @@ footer p{margin:0; color:var(--mute)}
   #coil{animation:none}
   .hl b{animation:none; clip-path:none}
   .ph{animation:none}
+  .big-l{animation:none; color:var(--gold); -webkit-text-stroke-color:var(--gold)}
+  .step::after{animation:none; width:78%}
+  .cal .c i{transform:none}
+  .cal.in .c i{animation:none}
 }
 </style>
 </head>
 <body>
 
-<header class="nav" id="topo">
+<span id="topo"></span>
+
+<header class="nav">
   <div class="nav-in">
     <div class="brand">
       <img class="brand-mark" src="/assets/apex-mark.webp" alt="" width="119" height="113">
@@ -269,9 +290,9 @@ footer p{margin:0; color:var(--mute)}
   <div class="wrap">
     <div class="hero-txt">
       <div class="steps">
-        <div class="step"><span class="big-l">A</span><span class="stk">Etapa 1</span><span class="st-name">Aceleração</span></div>
-        <div class="step"><span class="big-l">P</span><span class="stk">Etapa 2</span><span class="st-name">Posicionamento</span></div>
-        <div class="step"><span class="big-l">E</span><span class="stk">Etapa 3</span><span class="st-name">Escala</span></div>
+        <div class="step" style="--d:.25s"><span class="big-l">A</span><span class="stk">Etapa 1</span><span class="st-name">Aceleração</span></div>
+        <div class="step" style="--d:.65s"><span class="big-l">P</span><span class="stk">Etapa 2</span><span class="st-name">Posicionamento</span></div>
+        <div class="step" style="--d:1.05s"><span class="big-l">E</span><span class="stk">Etapa 3</span><span class="st-name">Escala</span></div>
       </div>
     </div>
   </div>
@@ -284,7 +305,6 @@ footer p{margin:0; color:var(--mute)}
     <div class="kpis">
       <div class="kpi"><p class="lbl">Investimento</p><p class="val">R$ 1.076,95</p><p class="note">total usado até aqui</p></div>
       <div class="kpi"><p class="lbl">Leads no WhatsApp</p><p class="val">199</p><p class="note">possíveis compradores</p></div>
-      <div class="kpi"><p class="lbl">Custo por lead</p><p class="val">R$ 5,41</p><p class="note">investimento ÷ leads</p></div>
     </div>
   </div>
 </section>
@@ -320,10 +340,10 @@ footer p{margin:0; color:var(--mute)}
         <div class="mk-cap"><span>Calendário editorial</span><b>Mês planejado</b></div>
         <div class="cal">
           <span class="d">S</span><span class="d">T</span><span class="d">Q</span><span class="d">Q</span><span class="d">S</span><span class="d">S</span><span class="d">D</span>
-          <span class="c"></span><span class="c"><i class="r"></i></span><span class="c"></span><span class="c"><i class="k"></i></span><span class="c"></span><span class="c"><i class="r"></i></span><span class="c"><i class="s"></i></span>
-          <span class="c"></span><span class="c"><i class="k"></i></span><span class="c"></span><span class="c"><i class="r"></i></span><span class="c"></span><span class="c"><i class="r"></i></span><span class="c"><i class="s"></i></span>
-          <span class="c"></span><span class="c"><i class="k"></i></span><span class="c"></span><span class="c"><i class="r"></i></span><span class="c"></span><span class="c"><i class="r"></i></span><span class="c"><i class="s"></i></span>
-          <span class="c"></span><span class="c"><i class="k"></i></span><span class="c"></span><span class="c"><i class="r"></i></span><span class="c"></span><span class="c"><i class="r"></i></span><span class="c"><i class="s"></i></span>
+          <span class="c"></span><span class="c"><i class="r" style="--d:.00s"></i></span><span class="c"></span><span class="c"><i class="k" style="--d:.04s"></i></span><span class="c"></span><span class="c"><i class="r" style="--d:.08s"></i></span><span class="c"><i class="s" style="--d:.12s"></i></span>
+          <span class="c"></span><span class="c"><i class="k" style="--d:.16s"></i></span><span class="c"></span><span class="c"><i class="r" style="--d:.20s"></i></span><span class="c"></span><span class="c"><i class="r" style="--d:.24s"></i></span><span class="c"><i class="s" style="--d:.28s"></i></span>
+          <span class="c"></span><span class="c"><i class="k" style="--d:.32s"></i></span><span class="c"></span><span class="c"><i class="r" style="--d:.36s"></i></span><span class="c"></span><span class="c"><i class="r" style="--d:.40s"></i></span><span class="c"><i class="s" style="--d:.44s"></i></span>
+          <span class="c"></span><span class="c"><i class="k" style="--d:.48s"></i></span><span class="c"></span><span class="c"><i class="r" style="--d:.52s"></i></span><span class="c"></span><span class="c"><i class="r" style="--d:.56s"></i></span><span class="c"><i class="s" style="--d:.60s"></i></span>
         </div>
         <div class="cal-leg">
           <span><i style="background:var(--gold)"></i>Reels</span>
@@ -399,6 +419,24 @@ footer p{margin:0; color:var(--mute)}
 <script>
 var $ = function(id){ return document.getElementById(id); };
 var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Abrir sempre no topo. Sem isso o navegador devolve a pagina na altura
+   em que ela estava da ultima vez, e quem abre o link perde o hero. */
+if('scrollRestoration' in history) history.scrollRestoration = 'manual';
+if(!location.hash) window.scrollTo(0, 0);
+
+/* Voltar ao topo. O href e so o caminho sem JS: quem manda e isto. */
+var btnTopo = document.querySelector('.btn-top');
+if(btnTopo) btnTopo.addEventListener('click', function(e){
+  e.preventDefault();
+  window.scrollTo({top:0, behavior: reduce ? 'auto' : 'smooth'});
+});
+
+/* O calendario so pipoca quando aparece na tela */
+var cal = document.querySelector('.cal');
+if(cal) new IntersectionObserver(function(es, obs){
+  if(es[0].isIntersecting){ cal.classList.add('in'); obs.disconnect(); }
+}, {threshold:.25}).observe(cal);
 
 /* Animacao do hero: a mesma do site principal */
 (function coil(){
