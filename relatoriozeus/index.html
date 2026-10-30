@@ -7,102 +7,148 @@
 <meta name="description" content="Relatório de resultados — Zeus. APEX Assessoria.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#070605">
+<link rel="icon" href="/assets/apex-mark.webp" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#070605; --fg:#F3EEE2; --mute:#A39C8B;
-  --gold:#FCBE09; --gold-soft:#FFDA6B; --gold-deep:#8A6400; --on-gold:#120e00;
+  --gold:#FCBE09; --gold-soft:#FFDA6B; --on-gold:#120e00;
   --line:rgba(255,236,190,.10);
   --card:#0E0D0D; --card-line:#342F26;
   --display:"Archivo","Arial Black",system-ui,sans-serif;
   --serif:"Instrument Serif","Times New Roman",Georgia,serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
-  --r-sm:12px; --r-md:18px; --r-lg:24px;
-  --gut:max(20px, env(safe-area-inset-left, 0px));
+  --r-sm:12px; --r-md:18px; --r-lg:24px; --nav-h:64px;
+  --gut-l:max(16px, env(safe-area-inset-left, 0px));
+  --gut-r:max(16px, env(safe-area-inset-right, 0px));
 }
 *{box-sizing:border-box}
-body{
-  margin:0; background:var(--ink); color:var(--fg);
+html{scroll-behavior:smooth; scroll-padding-top:90px}
+body{margin:0; background:var(--ink); color:var(--fg);
   font-family:var(--display); font-size:16px; line-height:1.55;
   overflow-x:hidden; -webkit-font-smoothing:antialiased;
-  -webkit-tap-highlight-color:transparent;
-}
-.wrap{max-width:900px; margin:0 auto; padding:0 var(--gut)}
+  -webkit-tap-highlight-color:transparent}
+.wrap{max-width:1240px; margin:0 auto; padding:0 var(--gut-r) 0 var(--gut-l)}
+.narrow{max-width:900px}
 
-/* topo — marca, sem navegacao */
-.top{border-bottom:1px solid var(--line); padding:22px 0}
-.top .wrap{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap}
-.mark{font-weight:900; letter-spacing:.14em; font-size:19px; color:var(--gold)}
-.mark span{color:var(--fg)}
-.kicker{font-family:var(--mono); font-size:11px; letter-spacing:.22em;
+/* topo: marca + um botao. sem menu, sem link de saida */
+.nav{position:fixed; top:0; left:0; right:0; z-index:50; pointer-events:none;
+  padding:calc(env(safe-area-inset-top,0px) + 10px) var(--gut-r) 0 var(--gut-l)}
+.nav-in{pointer-events:auto; max-width:1240px; margin:0 auto; display:flex;
+  align-items:center; justify-content:space-between; gap:12px;
+  padding:6px 6px 6px 14px; border-radius:999px;
+  background:rgba(14,13,10,.7); border:1px solid var(--line);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%)}
+.brand{display:flex; align-items:center; gap:10px; flex:none}
+.brand-mark{height:26px; width:auto}
+.brand-word{height:11px; width:auto; opacity:.95}
+
+.btn{display:inline-flex; align-items:center; justify-content:space-between;
+  gap:14px; border-radius:999px; padding:7px 7px 7px 22px; min-height:54px;
+  font-weight:600; font-size:15px; border:1px solid transparent;
+  text-decoration:none; cursor:pointer;
+  transition:background .3s,border-color .3s,color .3s,transform .3s;
+  white-space:nowrap}
+.btn-gold{background:var(--gold); color:var(--on-gold);
+  box-shadow:0 10px 40px -12px rgba(252,190,9,.6)}
+.btn-gold .dot{background:var(--on-gold); color:var(--gold)}
+.btn-sm{min-height:44px; padding:5px 5px 5px 16px; font-size:14px; gap:10px}
+.btn-sm .dot{width:34px; height:34px}
+.dot{width:40px; height:40px; border-radius:50%; display:grid;
+  place-items:center; flex:none; transform:rotate(-45deg);
+  transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.btn:hover .dot{transform:rotate(0deg)}
+.ic{width:24px; height:24px; flex:none; fill:none; stroke:currentColor;
+  stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; overflow:visible}
+.btn-sm .ic{width:18px; height:18px}
+
+/* hero com a animacao do site */
+.hero{position:relative; padding:calc(var(--nav-h) + 42px) 0 54px; overflow:hidden}
+.coil-box{position:relative; height:clamp(250px,74vw,360px)}
+#coil{position:absolute; inset:0; width:100%; height:100%;
+  animation:coilIn 1.8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes coilIn{from{opacity:0; transform:scale(.9)} to{opacity:1; transform:none}}
+.hero-tag{display:flex; align-items:center; gap:10px; margin:0 0 20px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.24em;
   text-transform:uppercase; color:var(--mute)}
-
-/* capa */
-.head{padding:64px 0 44px; border-bottom:1px solid var(--line)}
-.eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.26em;
-  text-transform:uppercase; color:var(--gold); margin:0 0 18px}
-h1{font-size:clamp(38px,8vw,74px); line-height:.98; letter-spacing:-.025em;
-  font-weight:900; margin:0 0 20px}
+.hero-tag .pip{width:9px; height:9px; border-radius:50%; background:var(--gold);
+  flex:none; box-shadow:0 0 14px rgba(252,190,9,.8)}
+.hero-tag b{color:var(--fg); font-weight:500; letter-spacing:.24em}
+.hero-txt{position:relative; z-index:2}
+h1{font-size:clamp(42px,9vw,92px); line-height:.94; letter-spacing:-.03em;
+  font-weight:900; margin:0 0 22px; text-transform:uppercase}
 h1 em{font-family:var(--serif); font-style:italic; font-weight:400;
-  letter-spacing:-.01em; color:var(--gold)}
-.perio{font-family:var(--mono); font-size:13px; color:var(--mute); margin:0}
+  text-transform:none; letter-spacing:-.01em; color:var(--gold)}
+.lede{font-size:clamp(16px,2.2vw,19px); color:var(--mute); margin:0; max-width:46ch}
+.lede b{color:var(--fg); font-weight:600}
 
-/* blocos */
-section{padding:50px 0; border-bottom:1px solid var(--line)}
-h2{font-size:clamp(21px,3.6vw,27px); font-weight:900; letter-spacing:-.015em;
-  margin:0 0 22px}
-h2::before{content:""; display:block; width:34px; height:3px;
-  background:var(--gold); border-radius:2px; margin-bottom:14px}
-p{margin:0 0 15px; color:var(--fg)}
-p.soft{color:var(--mute)}
-
-/* indicadores */
-.kpis{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+/* corpo do relatorio */
+section{padding:56px 0; border-top:1px solid var(--line)}
+h2{font-size:clamp(22px,3.6vw,30px); font-weight:900; letter-spacing:-.02em;
+  margin:0 0 24px}
+h2::before{content:""; display:block; width:36px; height:3px;
+  background:var(--gold); border-radius:2px; margin-bottom:15px}
+p{margin:0 0 15px}
+.kpis{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(178px,1fr))}
 .kpi{background:var(--card); border:1px solid var(--card-line);
-  border-radius:var(--r-md); padding:22px}
+  border-radius:var(--r-md); padding:24px}
 .kpi .lbl{font-family:var(--mono); font-size:10px; letter-spacing:.2em;
-  text-transform:uppercase; color:var(--mute); margin:0 0 10px}
-.kpi .val{font-size:34px; font-weight:900; line-height:1; letter-spacing:-.03em;
+  text-transform:uppercase; color:var(--mute); margin:0 0 11px}
+.kpi .val{font-size:38px; font-weight:900; line-height:1; letter-spacing:-.035em;
   color:var(--gold); margin:0}
-.kpi .note{font-size:12.5px; color:var(--mute); margin:9px 0 0}
-
-/* lista */
+.kpi .note{font-size:12.5px; color:var(--mute); margin:10px 0 0}
 ul.feitos{list-style:none; margin:0; padding:0}
-ul.feitos li{position:relative; padding:0 0 0 26px; margin:0 0 13px; color:var(--fg)}
+ul.feitos li{position:relative; padding:0 0 0 27px; margin:0 0 14px}
 ul.feitos li::before{content:""; position:absolute; left:0; top:9px;
   width:8px; height:8px; border-radius:50%; background:var(--gold)}
-
-/* preencher */
 .todo{border:1px dashed var(--card-line); border-radius:var(--r-sm);
-  padding:16px 18px; color:var(--mute); font-family:var(--mono);
-  font-size:12.5px; line-height:1.7}
+  padding:17px 19px; color:var(--mute); font-family:var(--mono);
+  font-size:12.5px; line-height:1.75}
 .todo b{color:var(--gold-soft); font-weight:500}
+footer{padding:40px 0 56px; border-top:1px solid var(--line);
+  color:var(--mute); font-size:12.5px}
+footer p{margin:0 0 5px; color:var(--mute)}
 
-footer{padding:38px 0 52px; color:var(--mute); font-size:12.5px}
-footer p{margin:0; color:var(--mute)}
+@media (min-width:960px){
+  .hero{padding:calc(var(--nav-h) + 76px) 0 84px; min-height:82vh;
+    display:flex; align-items:center}
+  .coil-box{position:absolute; inset:0; height:auto}
+  .hero-txt{max-width:640px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  #coil{animation:none}
+}
 </style>
 </head>
 <body>
 
-<div class="top">
-  <div class="wrap">
-    <div class="mark">APEX<span>&nbsp;Assessoria</span></div>
-    <div class="kicker">Relatório do cliente</div>
-  </div>
-</div>
-
-<header class="head">
-  <div class="wrap">
-    <p class="eyebrow">Relatório de resultados</p>
-    <h1>Zeus<br><em>o período em números</em></h1>
-    <p class="perio">PERÍODO A DEFINIR · EMITIDO EM 30/10/2026</p>
+<header class="nav">
+  <div class="nav-in">
+    <div class="brand">
+      <img class="brand-mark" src="/assets/apex-mark.webp" alt="" width="119" height="113">
+      <img class="brand-word" src="/assets/apex-word.webp" alt="APEX" width="259" height="32">
+    </div>
+    <a href="#relatorio" class="btn btn-gold btn-sm">Ver relatório<span class="dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span></a>
   </div>
 </header>
 
-<section>
+<div class="hero">
+  <div class="coil-box"><canvas id="coil" aria-hidden="true"></canvas></div>
   <div class="wrap">
+    <div class="hero-txt">
+      <p class="hero-tag"><span class="pip"></span><b>Relatório de resultados</b> · Zeus</p>
+      <h1>Os números<br>do período<br><em>sem rodeio.</em></h1>
+      <p class="lede">O que foi investido, o que voltou e o que vem a seguir — <b>com a leitura da APEX</b> sobre cada número.</p>
+    </div>
+  </div>
+</div>
+
+<section id="relatorio">
+  <div class="wrap narrow">
     <h2>Os números do período</h2>
     <div class="kpis">
       <div class="kpi"><p class="lbl">Investimento</p><p class="val">—</p><p class="note">a preencher</p></div>
@@ -114,17 +160,14 @@ footer p{margin:0; color:var(--mute)}
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap narrow">
     <h2>Leitura do período</h2>
-    <div class="todo">
-      <b>A preencher.</b> Dois ou três parágrafos lendo o que os números acima dizem —
-      o que melhorou, o que não andou, e por quê. É a parte que o cliente lê de verdade.
-    </div>
+    <div class="todo"><b>A preencher.</b> O que os números acima dizem — o que melhorou, o que não andou, e por quê. É a parte que o cliente lê de verdade.</div>
   </div>
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap narrow">
     <h2>O que foi feito</h2>
     <ul class="feitos">
       <li>A preencher — entrega do período</li>
@@ -135,20 +178,66 @@ footer p{margin:0; color:var(--mute)}
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap narrow">
     <h2>Próximos passos</h2>
-    <div class="todo">
-      <b>A preencher.</b> O que entra no próximo ciclo, em ordem de prioridade.
-    </div>
+    <div class="todo"><b>A preencher.</b> O que entra no próximo ciclo, em ordem de prioridade.</div>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">
+  <div class="wrap narrow">
     <p>© 2026 APEX Assessoria · Goiânia, GO</p>
     <p>Documento de uso exclusivo do cliente.</p>
   </div>
 </footer>
+
+<script>
+var $ = function(id){ return document.getElementById(id); };
+var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Animacao do hero: a mesma do site principal */
+(function coil(){
+  var cv = $('coil'); if(!cv) return;
+  var ctx = cv.getContext('2d');
+  var w = 0, h = 0, dpr = 1, mx = 0, my = 0, tx = 0, ty = 0, run = true, raf = 0;
+  var N = 280;
+  function size(){ dpr = Math.min(2, devicePixelRatio || 1); var r = cv.getBoundingClientRect(); w = r.width; h = r.height; cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+  function draw(ms){
+    var t = ms * .001; mx += (tx - mx) * .04; my += (ty - my) * .04;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+    var mobile = w < 960;
+    var S = mobile ? Math.min(w * .36, h * .42) : Math.min(w, h) * .40;
+    var cx = mobile ? w * .5 : w * .72, cy = mobile ? h * .52 : h * .46;
+    var ay = t * .22 + mx * .7, ax = 1.05 + my * .35, persp = 3.6;
+    var cay = Math.cos(ay), say = Math.sin(ay), cax = Math.cos(ax), sax = Math.sin(ax);
+    ctx.globalCompositeOperation = 'lighter'; ctx.lineCap = 'round';
+    for(var i = 0; i < N; i++){
+      var u = i / N * Math.PI * 2;
+      var R = 1 + .12 * Math.sin(2 * u - t * .5), px = Math.cos(u) * R, pz = Math.sin(u) * R, py = .18 * Math.sin(3 * u + t * .9);
+      var phi = 2 * u + t * .7, dx = Math.cos(u) * Math.cos(phi), dy = Math.sin(phi), dz = Math.sin(u) * Math.cos(phi);
+      var hw = .3 + .06 * Math.sin(5 * u + t);
+      var pts = [[px - dx * hw, py - dy * hw, pz - dz * hw], [px + dx * hw, py + dy * hw, pz + dz * hw]].map(function(pt){
+        var x = pt[0], y = pt[1], z = pt[2];
+        var x1 = x * cay + z * say, z1 = -x * say + z * cay, y2 = y * cax - z1 * sax, z2 = y * sax + z1 * cax, f = persp / (persp - z2);
+        return [cx + x1 * S * f, cy + y2 * S * f, z2, f];
+      });
+      var depth = Math.max(0, Math.min(1, ((pts[0][2] + pts[1][2]) / 2 + 1.4) / 2.8));
+      ctx.strokeStyle = 'rgba(252,' + Math.round(150 + depth * 80) + ',' + Math.round(depth * depth * 120) + ',' + (.05 + depth * depth * .75) + ')';
+      ctx.lineWidth = (.6 + depth * 1.4) * pts[0][3];
+      ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]); ctx.lineTo(pts[1][0], pts[1][1]); ctx.stroke();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+  function loop(ms){ if(!run) return; draw(ms); raf = requestAnimationFrame(loop); }
+  size(); draw(4000);
+  addEventListener('resize', function(){ size(); draw(performance.now()); });
+  if(reduce) return;
+  addEventListener('pointermove', function(e){ tx = e.clientX / innerWidth - .5; ty = e.clientY / innerHeight - .5; }, {passive:true});
+  new IntersectionObserver(function(es){ var e = es[0]; var v = e.isIntersecting && !document.hidden; if(v && !run){ run = true; raf = requestAnimationFrame(loop); } else if(!v){ run = false; cancelAnimationFrame(raf); } }).observe(cv);
+  document.addEventListener('visibilitychange', function(){ if(document.hidden){ run = false; cancelAnimationFrame(raf); } else { run = true; raf = requestAnimationFrame(loop); } });
+  raf = requestAnimationFrame(loop);
+})();
+</script>
 
 </body>
 </html>
