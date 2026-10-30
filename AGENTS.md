@@ -14,10 +14,34 @@ Página do subdomínio `app` da Apex. **HTML estático**, sem build, sem framewo
 sem dependência.
 
 ```
-index.html    a página
-404.html      a página de erro
-vercel.json   cleanUrls e trailingSlash
+index.html          a raiz — página mínima da marca, sem link nenhum
+404.html            a página de erro, mesma cara
+relatoriozeus/      o relatório de um cliente, uma pasta por cliente
+referencia/         o site institucional clonado, NÃO publicado
+vercel.json         cleanUrls e trailingSlash
+.vercelignore       o que não vai para o ar
 ```
+
+## `referencia/` — material de design, não página
+
+Ali dentro está a cópia do site que está no ar em `www.marketingapex.com.br`,
+que foi o ponto de partida deste projeto. **O `.vercelignore` impede que ela
+seja publicada**: o arquivo continua no Git e no disco, mas não é servido na
+web.
+
+É de lá que sai a construção das próximas páginas — copiar de `referencia/`
+em vez de clonar o site de novo. Apagar só quando o layout próprio estiver
+decidido, e essa é decisão de quem é dono.
+
+## Uma página por cliente, sem saída
+
+Cada cliente ganha uma pasta com `index.html` dentro — pasta, e não arquivo
+solto, porque o `vercel.json` usa `trailingSlash`.
+
+**A página do cliente não tem navegação.** Sem menu, sem link que saia dela,
+e com `noindex, nofollow` para não entrar em busca. O cliente abre o link,
+vê o que é dele, e não há por onde circular. Vale até o portal oficial
+existir.
 
 O `index.html` nasceu como cópia do site no ar em `www.marketingapex.com.br`.
 A identidade visual mora nas variáveis CSS do `<style>` dele — `--ink`, `--fg`,
