@@ -116,6 +116,77 @@ p{margin:0 0 15px}
 .pc ul{list-style:none; margin:0; padding:0; display:grid; gap:7px}
 .pc li{display:flex; gap:9px; align-items:flex-start; font-size:14px; line-height:1.35}
 .pc li .ic{width:16px; height:16px; color:var(--gold); margin-top:1px; stroke-width:2}
+
+/* cada servico ao lado da sua ilustracao */
+.svc{display:grid; gap:16px; align-items:start}
+.svc + .svc{margin-top:16px}
+@media (min-width:780px){ .svc{grid-template-columns:1fr 1fr} }
+
+/* a moldura das ilustracoes */
+.mock-wrap{position:relative}
+.mk{border-radius:var(--r-lg); border:1px solid var(--line-2);
+  background:linear-gradient(180deg,#14120d,#0b0a08); padding:16px;
+  position:relative; overflow:hidden;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.9), 0 0 0 1px rgba(0,0,0,.4)}
+.mk-cap{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--mute); display:flex;
+  justify-content:space-between; gap:10px; margin-bottom:12px}
+.mk-cap b{color:var(--gold); font-weight:500}
+
+/* calendario editorial */
+.cal{display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:5px}
+.cal .d{font-family:var(--mono); font-size:9.5px; color:var(--mute);
+  text-align:center; padding-bottom:2px}
+.cal .c{aspect-ratio:1; border-radius:8px; border:1px solid var(--line);
+  background:rgba(255,255,255,.015); position:relative; display:grid; place-items:center}
+.cal .c i{width:42%; aspect-ratio:1; border-radius:50%}
+.cal .c i.r{background:var(--gold); box-shadow:0 0 10px rgba(252,190,9,.6)}
+.cal .c i.k{background:var(--fg)}
+.cal .c i.s{border:1.5px solid var(--gold)}
+.cal-leg{display:flex; gap:14px; flex-wrap:wrap; margin-top:12px;
+  font-size:12px; color:var(--mute)}
+.cal-leg span{display:inline-flex; align-items:center; gap:6px}
+.cal-leg i{width:10px; height:10px; border-radius:50%}
+
+/* celular e linha do tempo da edicao */
+.reel{width:min(220px,64%); margin:0 auto; aspect-ratio:9/16; border-radius:22px;
+  overflow:hidden; position:relative; border:1.5px solid var(--line-2);
+  background:radial-gradient(70% 45% at 50% 70%,#3d2c0d,transparent 70%),
+             linear-gradient(180deg,#1c1a14,#0a0907)}
+.who-sil{position:absolute; left:50%; bottom:0; width:62%; height:56%;
+  transform:translateX(-50%);
+  background:radial-gradient(circle at 50% 26%,#4a4232 0 18%,transparent 19%),
+             radial-gradient(ellipse at 50% 100%,#3a3428 0 48%,transparent 49%)}
+.hl{position:absolute; left:0; right:0; top:20%; text-align:center}
+.hl small{display:block; font-family:var(--display); font-weight:700; font-size:10px;
+  letter-spacing:.3em; text-transform:uppercase; color:#fff; opacity:.9}
+.hl b{display:inline-block; font-family:var(--serif); font-style:italic;
+  font-weight:400; font-size:34px; line-height:1; color:var(--gold); margin-top:4px;
+  position:relative; clip-path:inset(0 100% 0 0);
+  animation:rev 4s cubic-bezier(.7,0,.2,1) infinite}
+.cap{position:absolute; left:12%; right:12%; bottom:18%; display:flex;
+  flex-wrap:wrap; justify-content:center; gap:4px}
+.cap span{font-weight:800; font-size:11.5px; color:#fff; background:rgba(0,0,0,.4);
+  padding:2px 5px; border-radius:4px}
+.cap span.on{background:var(--gold); color:var(--on-gold)}
+.tl{margin-top:16px; display:grid; gap:6px; position:relative}
+.tr{display:grid; grid-template-columns:52px minmax(0,1fr); gap:8px;
+  align-items:center; font-family:var(--mono); font-size:9.5px;
+  letter-spacing:.06em; text-transform:uppercase; color:var(--mute)}
+.tr div{height:18px; position:relative; border-radius:5px;
+  background:rgba(255,255,255,.03)}
+.tr div i{position:absolute; top:0; bottom:0; border-radius:5px}
+.tr.v div i{background:linear-gradient(90deg,#3a3122,#2a2419);
+  border:1px solid rgba(255,236,190,.12)}
+.tr.t div i{background:rgba(252,190,9,.35); border:1px solid var(--gold)}
+.tr.s div i{background:rgba(255,255,255,.18); height:6px; top:6px}
+.ph{position:absolute; top:-4px; bottom:-4px; left:60px; width:2px;
+  background:var(--gold); box-shadow:0 0 8px var(--gold);
+  animation:ph 4s linear infinite}
+@keyframes rev{0%{clip-path:inset(0 100% 0 0)}
+  18%,80%{clip-path:inset(0 0 0 0)}
+  95%,100%{clip-path:inset(0 0 0 100%)}}
+@keyframes ph{from{left:60px} to{left:calc(100% - 2px)}}
 ul.feitos{list-style:none; margin:0; padding:0}
 ul.feitos li{position:relative; padding:0 0 0 27px; margin:0 0 14px}
 ul.feitos li::before{content:""; position:absolute; left:0; top:9px;
@@ -133,6 +204,8 @@ footer p{margin:0; color:var(--mute)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   #coil{animation:none}
+  .hl b{animation:none; clip-path:none}
+  .ph{animation:none}
 }
 </style>
 </head>
@@ -180,7 +253,7 @@ footer p{margin:0; color:var(--mute)}
 <section>
   <div class="wrap narrow">
     <h2>O que a APEX também entrega</h2>
-    <div class="pcs">
+    <div class="svc">
 
       <article class="pc">
         <div class="pc-top">
@@ -196,6 +269,26 @@ footer p{margin:0; color:var(--mute)}
         </ul>
       </article>
 
+      <div class="mock-wrap"><div class="mk">
+        <div class="mk-cap"><span>Calendário editorial</span><b>Mês planejado</b></div>
+        <div class="cal">
+          <span class="d">S</span><span class="d">T</span><span class="d">Q</span><span class="d">Q</span><span class="d">S</span><span class="d">S</span><span class="d">D</span>
+          <span class="c"></span><span class="c"><i class="r"></i></span><span class="c"></span><span class="c"><i class="k"></i></span><span class="c"></span><span class="c"><i class="r"></i></span><span class="c"><i class="s"></i></span>
+          <span class="c"></span><span class="c"><i class="k"></i></span><span class="c"></span><span class="c"><i class="r"></i></span><span class="c"></span><span class="c"><i class="r"></i></span><span class="c"><i class="s"></i></span>
+          <span class="c"></span><span class="c"><i class="k"></i></span><span class="c"></span><span class="c"><i class="r"></i></span><span class="c"></span><span class="c"><i class="r"></i></span><span class="c"><i class="s"></i></span>
+          <span class="c"></span><span class="c"><i class="k"></i></span><span class="c"></span><span class="c"><i class="r"></i></span><span class="c"></span><span class="c"><i class="r"></i></span><span class="c"><i class="s"></i></span>
+        </div>
+        <div class="cal-leg">
+          <span><i style="background:var(--gold)"></i>Reels</span>
+          <span><i style="background:var(--fg)"></i>Carrossel</span>
+          <span><i style="border:1.5px solid var(--gold)"></i>Stories</span>
+        </div>
+      </div></div>
+
+    </div>
+
+    <div class="svc">
+
       <article class="pc">
         <div class="pc-top">
           <span class="ibox"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/><rect x="5" y="5" width="7" height="4" rx="1"/><rect x="10" y="10" width="8" height="4" rx="1"/><rect x="6" y="15" width="5" height="4" rx="1"/></svg></span>
@@ -209,6 +302,20 @@ footer p{margin:0; color:var(--mute)}
           <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Vertical, pronto pra postar</li>
         </ul>
       </article>
+
+      <div class="mock-wrap"><div class="mk">
+        <div class="reel">
+          <div class="who-sil"></div>
+          <div class="hl"><small>Tráfego</small><b>que vende</b></div>
+          <div class="cap"><span>o</span><span>criativo</span><span class="on">certo</span><span>vende</span><span>mais</span></div>
+        </div>
+        <div class="tl">
+          <div class="tr v">Vídeo<div><i style="left:0;width:34%"></i><i style="left:35%;width:28%"></i><i style="left:64%;width:36%"></i></div></div>
+          <div class="tr t">Texto<div><i style="left:6%;width:22%"></i><i style="left:40%;width:18%"></i><i style="left:70%;width:24%"></i></div></div>
+          <div class="tr s">Efeitos<div><i style="left:5%;width:3%"></i><i style="left:34%;width:3%"></i><i style="left:63%;width:3%"></i><i style="left:88%;width:3%"></i></div></div>
+          <span class="ph"></span>
+        </div>
+      </div></div>
 
     </div>
   </div>
